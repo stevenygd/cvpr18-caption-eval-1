@@ -50,10 +50,18 @@ keywords = {}
 ## Running Experiments
 
 1. Capability experiments
+```bash
+python discriminator_capability.py
+```
 
 2. Robustness experiments
+```bash
+python discriminator_robustness.py
+```
 
 ## Results
+
+To observe the result, please use the jupyter notebook ```plots.ipynb```. 
 
 1. Capability Experiment
 <p align="center">
