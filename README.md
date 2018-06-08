@@ -61,7 +61,7 @@ python discriminator_robustness.py
 
 ## Results
 
-To observe the result, please use the jupyter notebook ```plots.ipynb```. 
+To observe the result, please use the jupyter notebook ```plots.ipynb```.
 
 1. Capability Experiment
 <p align="center">
@@ -91,16 +91,14 @@ To use our metric, first put the output captions of a model into following JSON 
 
 ```json
 {
-    "<file-name>": [
-        "<caption-1>",
-        "<caption-2>",
-        ...,
-        "<caption-n>"
-    ]
+    "<file-name-1>" : "<caption-1>",
+    "<file-name-2>" : "<caption-2>",
+    ...
+    "<file-name-n>" : "<caption-n>",
 }
 ```
 
-Note that ```<caption-n>``` are caption represented in text, and the file name is the name for the file in the image. Suppose the json file has name ```submission.json```. Use the following command to get the score:
+Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. Suppose the json file has name ```submission.json```. Use the following command to get the score:
 
 ```
 python gen_data.py submission.json dict.json output.npy # tokenize, put into the dsire format
