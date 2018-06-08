@@ -40,7 +40,7 @@ keywords = {}
 
 2. Install dependency (1. tf1.4, opencv, compact-bilinear-pooling)
 
-3. Download data (MC-samplers, vocab, alpha/beta/gemma scores for other metrics)
+3. Download data (MC-samplers, alpha/beta/gemma scores for other metrics, GloveEmbedding)
 
 4. Preprocessing Image (image resize, extract image feature)
 

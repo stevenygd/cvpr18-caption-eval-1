@@ -51,3 +51,31 @@ for i in range(len(coco_word_10k)):
     word_to_idx[coco_word_10k[i]] = i
 
 np.save(os.path.join(args.output_path, 'word_to_idx.npy'),  word_to_idx)
+
+# Prepare Glove Word Embedding
+idx_to_word = {i: w for w, i in word_to_idx.iteritems()}
+D50 = np.load('./glove/glove_50.npy').item()
+D100 = np.load('./glove/glove_100.npy').item()
+D200 = np.load('./glove/glove_200.npy').item()
+D300 = np.load('./glove/glove_300.npy').item()
+
+def D_to_W(D, dim):
+    W = np.zeros((len(idx_to_word), dim), dtype=np.float32)
+    for i in xrange(len(idx_to_word)):
+        word = idx_to_word[i]
+        if word in D:
+            W[i, :] = D[word]
+        else:
+            W[i, :] = D['<unk>']
+    return W
+
+W50 = D_to_W(D50, 50)
+W100 = D_to_W(D100, 100)
+W200 = D_to_W(D200, 200)
+W300 = D_to_W(D300, 300)
+
+np.save(os.path.join(args.output_path, 'word_embedding_50.npy' ), W50)
+np.save(os.path.join(args.output_path, 'word_embedding_100.npy'), W100)
+np.save(os.path.join(args.output_path, 'word_embedding_200.npy'), W200)
+np.save(os.path.join(args.output_path, 'word_embedding_300.npy'), W300)
+
