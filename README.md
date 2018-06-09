@@ -98,9 +98,16 @@ To use our metric, first put the output captions of a model into following JSON 
 }
 ```
 
-Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. Suppose the json file has name ```submission.json```. Use the following command to get the score:
+Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. Suppose the json file has name ```submission.json```. An example of such file can be found in ```examples/neuraltalk_all_captions.json```. Following command prepared the data so that it could be used for training:
 
+```bash
+python scripts/preparation/prep_submission.py --submission examples/neuraltalk_all_captions.json  --name neuraltalk
 ```
-python gen_data.py submission.json dict.json output.npy # tokenize, put into the dsire format
-python score.py --train-model-data output.npy
+
+Note that we assume you've followed through the steps in the *Preparation* section before running this command. This script will create a folder `data/neuraltalk` and three ```.npy``` files that contain data needed for training the metric. Please use the following command to train the metric:
+
+```bash
+python score.py --name neuraltalk
 ```
+
+The results will be logged in `model/neuraltalk_scoring` directory. If you use the default model architecture, the results will be in `model/neuraltalk_scoring/bilinear_img_1_512_0.txt`.
