@@ -20,17 +20,59 @@ from tensorflow.python.util import nest
 from discriminator import *
 from config import *
 
-tf.app.flags.DEFINE_string('architecture', 'bilinear_img_1_512_0',
-                           """Number of images to process in a batch.""")
-tf.app.flags.DEFINE_string('data-path', "",
+tf.app.flags.DEFINE_string('data_path', "",
                            """Path where the data will be loaded.""")
+tf.app.flags.DEFINE_string('model_architecture', 'bilinear_img_1_512_0',
+                           """Number of images to process in a batch.""")
 args = tf.app.flags.FLAGS
+
+def data_loader(data_path=None, data_type = '_full', use_mc_samples=False):
+    """
+    Data format (compatible with Show Attend and Tell):
+    the data file is a dict has the following keys:
+    'file_names'
+    'image_idxs'
+    'captions': a dict has keys 'gen' for generator and 'dis' for discriminator
+    'features': a dict has keys 'gen' for generator and 'dis' for discriminator
+                (to be loaded when needed)
+    'word_to_idx': a dict with word to idx mapping
+    """
+    data_train = np.load(os.path.join(data_path, "data_train_full.npy")).item()
+    data_val = np.load(os.path.join(data_path, "data_val_full.npy")).item()
+    data_test = np.load(os.path.join(data_path, "data_test_full.npy")).item()
+    if use_mc_samples:
+        # mc_train = np.load(os.path.join(data_path, 'dumped_train.npy')).item()
+        # mc_val = np.load(os.path.join(data_path, 'dumped_val.npy')).item()
+        # mc_test = np.load(os.path.join(data_path, 'dumped_test.npy')).item()
+        mc_train = np.load('./data/dumped_train.npy').item()
+        mc_val = np.load('./data/dumped_val.npy').item()
+        mc_test = np.load('./data/dumped_test.npy').item()
+        data_train = add_mc_samples(data_train, mc_train)
+        data_val = add_mc_samples(data_val, mc_val)
+        data_test = add_mc_samples(data_test, mc_test)
+
+    data_train['features']['dis'] = np.load(
+            './data/resnet152/feature_dis_train%s.npy' % (data_type)
+        ).item()
+    data_val['features']['dis'] = np.load(
+            './data/resnet152/feature_dis_val%s.npy' % (data_type)
+        ).item()
+    data_test['features']['dis'] = np.load(
+            './data/resnet152/feature_dis_test%s.npy' % (data_type)
+        ).item()
+
+    word_embedding = np.load(
+            './data/word_embedding_%s.npy' % (str(Config().embedding_size))
+        )
+    return [data_train, data_val, data_test, word_embedding]
+
 
 
 def main(_):
     exp_name = 'scoring'
     log_path = './log/' + exp_name
     save_path = './model/' + exp_name
+    print(args.data_path)
     assert args.data_path != ""
     if not os.path.exists(log_path):
         os.makedirs(log_path)

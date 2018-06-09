@@ -122,7 +122,10 @@ data_train = gen_new_data(train_filename, train_data)
 data_val = gen_new_data(val_filename, val_data)
 data_test = gen_new_data(test_filename, test_data)
 
-np.save(os.path.join(args.output_path, 'train_data.npy'), data_train)
-np.save(os.path.join(args.output_path, 'val_data.npy'),   data_val)
-np.save(os.path.join(args.output_path, 'test_data.npy'),  data_test)
+# np.save(os.path.join(args.output_path, 'train_data.npy'), data_train)
+# np.save(os.path.join(args.output_path, 'val_data.npy'),   data_val)
+# np.save(os.path.join(args.output_path, 'test_data.npy'),  data_test)
 
+np.save(os.path.join(args.output_path, 'data_train_full.npy'), data_train)
+np.save(os.path.join(args.output_path, 'data_val_full.npy'),   data_val)
+np.save(os.path.join(args.output_path, 'data_test_full.npy'),  data_test)
