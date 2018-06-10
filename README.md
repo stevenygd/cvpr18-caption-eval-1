@@ -47,7 +47,13 @@ git clone --recursive https://github.com/richardaecn/cvpr18-caption-eval.git
 ./download.sh
 ```
 
-4. Preprocessing Image (image resize, extract image feature)
+4. Extract image features. Following script will download ResNet checkpoint and use the checkpoint to extract the image features from MSCOCO dataset.
+```bash
+cd scripts/features/
+./download.sh
+python feature_extraction_coco.py --data-dir ../../data/ --coco-img-dir ../../data
+```
+
 
 ## Running Experiments
 
@@ -100,7 +106,7 @@ To use our metric, first put the output captions of a model into following JSON 
 }
 ```
 
-Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. Suppose the json file has name ```submission.json```. An example of such file can be found in ```examples/neuraltalk_all_captions.json```. Following command prepared the data so that it could be used for training:
+Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. An example of such file can be found in ```examples/neuraltalk_all_captions.json```. Following command prepared the data so that it could be used for training:
 
 ```bash
 python scripts/preparation/prep_submission.py --submission examples/neuraltalk_all_captions.json  --name neuraltalk
