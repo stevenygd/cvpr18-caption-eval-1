@@ -54,10 +54,21 @@ np.save(os.path.join(args.output_path, 'word_to_idx.npy'),  word_to_idx)
 
 # Prepare Glove Word Embedding
 idx_to_word = {i: w for w, i in word_to_idx.iteritems()}
-D50 = np.load('./glove/glove_50.npy').item()
-D100 = np.load('./glove/glove_100.npy').item()
-D200 = np.load('./glove/glove_200.npy').item()
-D300 = np.load('./glove/glove_300.npy').item()
+def load_glove(filename):
+    ret = {}
+    with open(filename) as f:
+        for l in f:
+            lst = l.split()
+            key = lst[0]
+            value = np.array(lst[1:]).astype(np.float)
+            ret[key] = value
+    return ret
+
+D50  = load_glove('./glove/glove.6B.50d.txt')
+D100 = load_glove('./glove/glove.6B.100d.txt')
+D200 = load_glove('./glove/glove.6B.200d.txt')
+D300 = load_glove('./glove/glove.6B.300d.txt')
+
 
 def D_to_W(D, dim):
     W = np.zeros((len(idx_to_word), dim), dtype=np.float32)
@@ -66,7 +77,7 @@ def D_to_W(D, dim):
         if word in D:
             W[i, :] = D[word]
         else:
-            W[i, :] = D['<unk>']
+            W[i, :] = D['unk']
     return W
 
 W50 = D_to_W(D50, 50)
