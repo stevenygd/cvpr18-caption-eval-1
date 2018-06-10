@@ -20,7 +20,9 @@ from tensorflow.python.util import nest
 from discriminator import *
 from config import *
 
-tf.app.flags.DEFINE_string('data_path', "",
+tf.app.flags.DEFINE_string('data_path', "./data",
+                           """Path where the data will be loaded.""")
+tf.app.flags.DEFINE_string('name', "mysubmission",
                            """Path where the data will be loaded.""")
 tf.app.flags.DEFINE_string('model_architecture', 'bilinear_img_1_512_0',
                            """Number of images to process in a batch.""")
@@ -69,21 +71,20 @@ def data_loader(data_path=None, data_type = '_full', use_mc_samples=False):
 
 
 def main(_):
-    exp_name = 'scoring'
+    exp_name = "%s_scoring"%(args.name)
     log_path = './log/' + exp_name
     save_path = './model/' + exp_name
-    print(args.data_path)
-    assert args.data_path != ""
+    data_path = os.path.join(args.data_path, args.name)
     if not os.path.exists(log_path):
         os.makedirs(log_path)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    train_models = ['mysubmission']
-    test_models = ['mysubmission', 'human']
+    train_models = [args.name]
+    test_models = [args.name, 'human']
 
     [data_train, data_val, data_test, word_embedding] = data_loader(
-            args.data_path, use_mc_samples=True)
+            data_path, use_mc_samples=True)
     word_to_idx = data_train['word_to_idx']
 
     config = Config()
