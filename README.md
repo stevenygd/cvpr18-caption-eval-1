@@ -37,15 +37,17 @@ keywords = {}
 ## Preparation
 
 1. Clone the dataset with recursive (include the bilinear pooling)
-
+```bash
+git clone --recursive https://github.com/richardaecn/cvpr18-caption-eval.git
+```
 2. Install dependency (1. tf1.4, opencv, compact-bilinear-pooling)
 
 3. Download data (MC-samplers, alpha/beta/gemma scores for other metrics, GloveEmbedding)
+```bash
+./download.sh
+```
 
 4. Preprocessing Image (image resize, extract image feature)
-
-5. Introduce how to run each of the experiments
-    (NOTE: if they want to do that, need to download the data for the three models we trained on)
 
 ## Running Experiments
 
