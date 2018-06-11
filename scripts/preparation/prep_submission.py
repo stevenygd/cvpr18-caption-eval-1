@@ -4,6 +4,8 @@ import time
 import os
 import numpy as np
 import progressbar
+import nltk
+import string
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument(
@@ -96,6 +98,11 @@ def gen_new_data(filename, data):
 
     return ret
 
+def tokenize(sent):
+    tokens = nltk.word_tokenize(sent)
+    tokens = [w for w in tokens if w not in string.punctuation]
+    return tokens
+
 print("Assign images to split.")
 pbar = progressbar.ProgressBar()
 for i in pbar(range(len(split['images']))):
@@ -103,23 +110,30 @@ for i in pbar(range(len(split['images']))):
     filename = split['images'][i]['filename']
     tokens = []
     for j in range(len(anns)):
-        tokens.append(anns[j]['tokens'])
+        human_sent = anns[j]['raw']
+        # tokens.append(anns[j]['tokens'])
+        tokens.append(tokenize(human_sent))
 
+    sent = mysubmission[filename]
+    cap_tokens = tokenize(sent)
     if split['images'][i]['split'] == 'train' or split['images'][i]['split'] == 'restval':
         train_filename.append(filename)
         train_data[filename] = {}
         train_data[filename]['human'] = tokens
-        train_data[filename][args.name] = mysubmission[filename].split()
+        # train_data[filename][args.name] = mysubmission[filename].split()
+        train_data[filename][args.name] = cap_tokens
     elif split['images'][i]['split'] == 'val':
         val_filename.append(filename)
         val_data[filename] = {}
         val_data[filename]['human'] = tokens
-        val_data[filename][args.name] = mysubmission[filename].split()
+        # val_data[filename][args.name] = mysubmission[filename].split()
+        val_data[filename][args.name] = cap_tokens
     elif split['images'][i]['split'] == 'test':
         test_filename.append(filename)
         test_data[filename] = {}
         test_data[filename]['human'] = tokens
-        test_data[filename][args.name] = mysubmission[filename].split()
+        # test_data[filename][args.name] = mysubmission[filename].split()
+        test_data[filename][args.name] = cap_tokens
 
 print("Prepare captions from training set.")
 train_data = prep_caption_feat(train_filename, train_data)
