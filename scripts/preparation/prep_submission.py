@@ -96,6 +96,7 @@ def gen_new_data(filename, data):
 
     return ret
 
+print("Assign images to split.")
 pbar = progressbar.ProgressBar()
 for i in pbar(range(len(split['images']))):
     anns = split['images'][i]['sentences']
@@ -120,18 +121,26 @@ for i in pbar(range(len(split['images']))):
         test_data[filename]['human'] = tokens
         test_data[filename][args.name] = mysubmission[filename].split()
 
+print("Prepare captions from training set.")
 train_data = prep_caption_feat(train_filename, train_data)
-val_data   = prep_caption_feat(val_filename,   val_data)
-test_data  = prep_caption_feat(test_filename,  test_data)
-
 data_train = gen_new_data(train_filename, train_data)
+
+print("Prepare captions from validation set.")
+val_data   = prep_caption_feat(val_filename,   val_data)
 data_val = gen_new_data(val_filename, val_data)
+
+print("Prepare captions from test set.")
+test_data  = prep_caption_feat(test_filename,  test_data)
 data_test = gen_new_data(test_filename, test_data)
 
 # np.save(os.path.join(output_path, 'train_data.npy'), data_train)
 # np.save(os.path.join(output_path, 'val_data.npy'),   data_val)
 # np.save(os.path.join(output_path, 'test_data.npy'),  data_test)
 
+print("Saving data...")
 np.save(os.path.join(output_path, 'data_train_full.npy'), data_train)
 np.save(os.path.join(output_path, 'data_val_full.npy'),   data_val)
 np.save(os.path.join(output_path, 'data_test_full.npy'),  data_test)
+
+
+print("Done.")
