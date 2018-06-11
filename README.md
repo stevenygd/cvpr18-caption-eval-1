@@ -47,12 +47,17 @@ git clone --recursive https://github.com/richardaecn/cvpr18-caption-eval.git
 pip install -r requirements.txt
 ```
 
-3. Download data. This script will download data for both robustness and capability experiments, data created by Monte Carlo sampling, and Karpathy's split.
+3. Download data. This script will download data for both robustness and capability experiments, data created by Monte Carlo sampling, Karpathy's split, Glove embedding, and MSCOCO images.
 ```bash
 ./download.sh
 ```
 
-4. Extract image features. Following script will download ResNet checkpoint and use the checkpoint to extract the image features from MSCOCO dataset.
+4. Generate vocabulrary.
+```bash
+python scripts/preparation/prep_vocab.py
+```
+
+5. Extract image features. Following script will download ResNet checkpoint and use the checkpoint to extract the image features from MSCOCO dataset. This might take up to five hours.
 ```bash
 cd scripts/features/
 ./download.sh

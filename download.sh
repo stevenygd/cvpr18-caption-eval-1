@@ -21,6 +21,8 @@ rm -r cvpr18-caption-eval
 rm -r cvpr18-caption-eval.zip
 rm -r __MACOSX
 
+# TODO: download data_robustness.npy
+
 # Download MSCOCO
 wget http://images.cocodataset.org/zips/train2014.zip
 wget http://images.cocodataset.org/zips/val2014.zip
