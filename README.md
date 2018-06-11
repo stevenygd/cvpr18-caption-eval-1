@@ -33,6 +33,8 @@ keywords = {}
 + Python (2.7)
 + Tensorflow (>1.4)
 + OpenCV
++ PyTorch (for extracting ResNet image features.)
++ ProgressBar
 
 ## Preparation
 
@@ -40,9 +42,12 @@ keywords = {}
 ```bash
 git clone --recursive https://github.com/richardaecn/cvpr18-caption-eval.git
 ```
-2. Install dependency (1. tf1.4, opencv, compact-bilinear-pooling)
+2. Install dependencies. Please refer to TensorFlow, PyTorch, and OpenCV's official websites for installation guide. For other dependencies, please use the following:
+```bash
+pip install -r requirements.txt
+```
 
-3. Download data (MC-samplers, alpha/beta/gemma scores for other metrics, GloveEmbedding)
+3. Download data. This script will download data for both robustness and capability experiments, data created by Monte Carlo sampling, and Karpathy's split.
 ```bash
 ./download.sh
 ```
