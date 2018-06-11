@@ -116,7 +116,7 @@ To use our metric, first put the output captions of a model into following JSON 
 }
 ```
 
-Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. An example of such file can be found in ```examples/neuraltalk_all_captions.json```. Following command prepared the data so that it could be used for training:
+Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. The caption should be all lower-cased and have no ```\n``` at the end. Examples of such file can be found in the ```examples``` folder: ```examples/neuraltalk_all_captions.json```, ```examples/showandtell_all_captions.json```, and ```examples/showattendandtell_all_captions.json```. Following command prepared the data so that it could be used for training:
 
 ```bash
 python scripts/preparation/prep_submission.py --submission examples/neuraltalk_all_captions.json  --name neuraltalk
@@ -129,3 +129,7 @@ python score.py --name neuraltalk
 ```
 
 The results will be logged in `model/neuraltalk_scoring` directory. If you use the default model architecture, the results will be in `model/neuraltalk_scoring/bilinear_img_1_512_0.txt`.
+
+| Methods | Neuraltalk | Showandtell | Showattendtell |
+|---------|------------|-------------|----------------|
+| Score   | 0.091      | 0.026       |                |
