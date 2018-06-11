@@ -13,8 +13,12 @@ import numpy as np
 
 from resnet import *
 
+parser = argparse.ArgumentParser()
 parser.add_argument('--data-dir', type=str, default=None, required=True,
                     help='data directory (default: None)')
+parser.add_argument('--coco-img-dir', type=str, default=None, required=True,
+                    help='directory storing the coco images (default: None)')
+args = parser.parse_args()
 
 dataset = 'coco'
 folder_name = "resnet152"
@@ -41,16 +45,25 @@ def feature_extraction(data):
     feature_dis = {}
 
     for i in xrange(len(file_names)):
-        print(i, len(file_names))
-        path = file_names[i]
-        print path
+        print((i, len(file_names)))
+        file_name = file_names[i]
+        if '_train2014_' in file_name:
+            path = os.path.join(args.coco_img_dir, 'train2014', file_name)
+        elif '_val2014_' in file_name:
+            path = os.path.join(args.coco_img_dir, 'val2014', file_name)
+        elif '_test2014_' in file_name:
+            path = os.path.join(args.coco_img_dir, 'test2014', file_name)
+        else:
+            raise Exception("Invalid filename : %s"%file_name)
+
+        print(path)
         img = torch.unsqueeze(transform(Image.open(path).convert('RGB')), 0)
         input_var = torch.autograd.Variable(img, volatile=True)
         # feature = model(input_var).data.cpu().numpy().reshape([14*14, 2048])
         feature = model(input_var).data.cpu().numpy().reshape([7*7, 2048])
 
         feature_gen[i, :, :] = feature
-        feature_dis[file_names[i]] = np.mean(feature, axis=0)
+        feature_dis[file_name] = np.mean(feature, axis=0)
 
     return feature_gen, feature_dis
 
