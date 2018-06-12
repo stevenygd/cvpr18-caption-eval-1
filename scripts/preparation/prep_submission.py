@@ -100,7 +100,7 @@ def gen_new_data(filename, data):
     return ret
 
 def tokenize(sent):
-    tokens = nltk.word_tokenize(sent)
+    tokens = nltk.word_tokenize(sent.lower())
     tokens = [w for w in tokens if w not in string.punctuation]
     return tokens
 
