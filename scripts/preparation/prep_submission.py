@@ -28,6 +28,7 @@ parser.add_argument(
         help='Name of the method.')
 
 args = parser.parse_args()
+assert args.name != 'human' # Prevent naming conflits
 
 output_path = os.path.join(args.output_path, args.name)
 if not os.path.exists(output_path):
