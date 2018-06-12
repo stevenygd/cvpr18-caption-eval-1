@@ -35,6 +35,7 @@ keywords = {}
 + OpenCV
 + PyTorch (for extracting ResNet image features.)
 + ProgressBar
++ NLTK
 
 ## Preparation
 
@@ -42,7 +43,7 @@ keywords = {}
 ```bash
 git clone --recursive https://github.com/richardaecn/cvpr18-caption-eval.git
 ```
-2. Install dependencies. Please refer to TensorFlow, PyTorch, and OpenCV's official websites for installation guide. For other dependencies, please use the following:
+2. Install dependencies. Please refer to TensorFlow, PyTorch, NTLK, and OpenCV's official websites for installation guide. For other dependencies, please use the following:
 ```bash
 pip install -r requirements.txt
 ```
@@ -69,7 +70,8 @@ python feature_extraction_coco.py --data-dir ../../data/ --coco-img-dir ../../da
 
 1. Capability experiments
 ```bash
-python discriminator_capability.py
+python discriminator_capability.py # Running the experiment without data augmentation
+python discriminator_capability.py --data-aug # with data augmentation
 ```
 
 2. Robustness experiments
@@ -116,7 +118,8 @@ To use our metric, first put the output captions of a model into following JSON 
 }
 ```
 
-Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. The caption should be all lower-cased and have no ```\n``` at the end. Examples of such file can be found in the ```examples``` folder: ```examples/neuraltalk_all_captions.json```, ```examples/showandtell_all_captions.json```, and ```examples/showattendandtell_all_captions.json```. Following command prepared the data so that it could be used for training:
+Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. The caption should be all lower-cased and have no ```\n``` at the end. Examples of such file can be found in the ```examples``` folder: ```examples/neuraltalk_all_captions.json```, ```examples/showandtell_all_captions.json```, ```examples/showattendandtell_all_captions.json```, and ```examples/human_all_captions.json```. 
+Following command prepared the data so that it could be used for training:
 
 ```bash
 python scripts/preparation/prep_submission.py --submission examples/neuraltalk_all_captions.json  --name neuraltalk
@@ -130,6 +133,8 @@ python score.py --name neuraltalk
 
 The results will be logged in `model/neuraltalk_scoring` directory. If you use the default model architecture, the results will be in `model/neuraltalk_scoring/bilinear_img_1_512_0.txt`.
 
-| Methods | Neuraltalk | Showandtell | Showattendtell |
-|---------|------------|-------------|----------------|
-| Score   | 0.091      | 0.026       |                |
+Followings are the score for the submissions
+
+| Architecture         | Neuraltalk | Showandtell | Showattendtell | Human |
+|----------------------|------------|-------------|----------------|-------|
+| bilinear_img_1_512_0 | 0.036      | 0.039       | 0.060          | x.xxx |
