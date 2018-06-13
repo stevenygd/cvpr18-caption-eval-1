@@ -91,7 +91,6 @@ To observe the result, please use the jupyter notebook ```plots.ipynb```.
   <img src="figs/turing_test_gen.png" width=400>
 </p>
 
-
 2. Robustness Experiment
 <p align="center">
   <img src="figs/alpha_ours.png" width=250>
@@ -105,9 +104,9 @@ To observe the result, please use the jupyter notebook ```plots.ipynb```.
 </p>
 
 
-## Evaluate a Model
+## Evaluate One Submission
 
-To use our metric, first put the output captions of a model into following JSON format:
+This section contains instruction to use our metric to evaluate a single submission. First put the output captions of a model into following JSON format:
 
 ```json
 {
@@ -118,7 +117,7 @@ To use our metric, first put the output captions of a model into following JSON 
 }
 ```
 
-Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. The caption should be all lower-cased and have no ```\n``` at the end. Examples of such file can be found in the ```examples``` folder: ```examples/neuraltalk_all_captions.json```, ```examples/showandtell_all_captions.json```, ```examples/showattendandtell_all_captions.json```, and ```examples/human_all_captions.json```. 
+Note that ```<caption-i>``` are caption represented in text, and the file name is the name for the file in the image. The caption should be all lower-cased and have no ```\n``` at the end. Examples of such file can be found in the ```examples``` folder: ```examples/neuraltalk_all_captions.json```, ```examples/showandtell_all_captions.json```, ```examples/showattendandtell_all_captions.json```, and ```examples/human_all_captions.json```.
 Following command prepared the data so that it could be used for training:
 
 ```bash
@@ -133,8 +132,15 @@ python score.py --name neuraltalk
 
 The results will be logged in `model/neuraltalk_scoring` directory. If you use the default model architecture, the results will be in `model/neuraltalk_scoring/bilinear_img_1_512_0.txt`.
 
-Followings are the score for the submissions
+Followings are the score for the submissions. (Scores might be slightly different due to randomization.)
 
-| Architecture         | Neuraltalk | Showandtell | Showattendtell | Human |
-|----------------------|------------|-------------|----------------|-------|
-| bilinear_img_1_512_0 | 0.036      | 0.039       | 0.060          | x.xxx |
+| Architecture         | Epochs | Neuraltalk | Showandtell | Showattendtell | Human |
+|----------------------|--------|------------|-------------|----------------|-------|
+| bilinear_img_1_512_0 | 10     | 0.079      | 0.103       | 0.121          | 0.605 |
+| bilinear_img_1_512_0 | 30     | 0.066      | 0.073       | 0.111          | 0.611 |
+
+## Evaluate Multiple Submissions
+
+Another option to use our metric in a competition is to use all available submissions as negative examples during training.
+
+TODO:need more instructions here.
