@@ -132,11 +132,12 @@ python score.py --name neuraltalk
 
 The results will be logged in `model/neuraltalk_scoring` directory. If you use the default model architecture, the results will be in `model/neuraltalk_scoring/bilinear_img_1_512_0.txt`.
 
-Followings are the score for the submissions
+Followings are the score for the submissions. (Scores might be slightly different due to randomization.)
 
-| Architecture         | Neuraltalk | Showandtell | Showattendtell | Human |
-|----------------------|------------|-------------|----------------|-------|
-| bilinear_img_1_512_0 | 0.106      | 0.126       | 0.121          | 0.605 |
+| Architecture         | Epochs | Neuraltalk | Showandtell | Showattendtell | Human |
+|----------------------|--------|------------|-------------|----------------|-------|
+| bilinear_img_1_512_0 | 10     | 0.079      | 0.103       | 0.121          | 0.605 |
+| bilinear_img_1_512_0 | 30     | 0.066      | 0.073       | 0.111          | 0.611 |
 
 ## Evaluate Multiple Submissions
 
