@@ -26,6 +26,8 @@ tf.app.flags.DEFINE_string('name', "mysubmission",
                            """Path where the data will be loaded.""")
 tf.app.flags.DEFINE_string('model_architecture', 'bilinear_img_1_512_0',
                            """Number of images to process in a batch.""")
+tf.app.flags.DEFINE_integer('epochs', 30,
+                           """Number of epochs.""")
 args = tf.app.flags.FLAGS
 
 def data_loader(data_path=None, data_type = '_full', use_mc_samples=False):
@@ -89,6 +91,8 @@ def main(_):
 
     config = Config()
     config = config_model_coco(config, args.model_architecture)
+    config.max_epoch = args.epochs
+
     print("Model architecture:%s"%(args.model_architecture))
     with tf.Graph().as_default():
         with tf.name_scope("Train"):
